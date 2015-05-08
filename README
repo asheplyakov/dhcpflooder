@@ -1,0 +1,19 @@
+dhcpflooder is a weird DHCP client which asks for IP using a fake MAC address,
+and releases it after a short (possibly zero) period of time.
+Useful for testing if DHCP server operates properly under a load.
+
+Prerequisites: python 2.7, python-scapy
+
+Suggested usage:
+
+1. Configure and start the DHCP server.
+2. Start capturing DHCP traffic:
+
+   sudo tcpdump -i $IFACE -w dhcp.pcap 'udp and (port 67 or port 68)'
+
+3. Start dhcpflooder:
+
+   IFACE=eth0
+   for mac in mac1 mac2 mac3 mac4; do
+   	sudo ./dhcpflooder.py -i $IFACE $mac
+   done
